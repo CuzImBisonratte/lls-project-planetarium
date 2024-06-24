@@ -77,8 +77,13 @@ init();
 
 function positionPlanets() {
     // All planets
+    var angle = 0;
     for (var planet in planets) {
-        document.getElementById(planet).style.transform = 'translate(' + planets[planet].distance_px + 'px, 0)';
+        var speed = config.speed;
+        var planet_element = document.getElementById(planet);
+        var x = Math.cos(angle * (Math.PI / 180)) * planets[planet].distance_px;
+        var y = Math.sin(angle * (Math.PI / 180)) * planets[planet].distance_px;
+        planet_element.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
     }
 }
 
