@@ -6,13 +6,13 @@
  */
 var config = {
     speed: 1,
-    sun_radius: 696340,
-    distance_factor: 0.01,
+    secure_area: 0.1,
     planets: {
         earth: {
             radius: 6371,
-            distance: 149597870,
-            speed: 24
+            speed: 24,
+            distance: 10,
+            size_factor: 10
         }
     }
 };
@@ -20,32 +20,44 @@ var config = {
 // 
 // CONFIG END
 // 
-var window_width;
-var window_height;
+const SUN_SIZE = 696340;
+const SUN_PX = 100;
+
+var system_center = {
+    x: 0,
+    y: 0
+};
 var planets = [];
+var system_radius;
 
 function init() {
-    // Calculate planets object
-    for (var planet in config.planets) {
-        var p = config.planets[planet];
-        planets.push({
-            name: planet,
-            radius: p.radius / config.sun_radius,
-            distance: p.distance * config.distance_factor,
-            speed: p.speed
-        });
-    }
-    // Get furthest planet distance
-    var max_distance = 0;
-    var max_planet;
-    planets.forEach(function (planet) {
-        if (planet.distance > max_distance) {
-            max_distance = planet.distance;
-            max_planet = planet.name;
-        }
-    });
-    document.getElementById(max_planet).style.border = "15px solid red";
+    // Query window size
+    var window_width = window.innerWidth;
+    var window_height = window.innerHeight;
+    system_center = { x: window_width / 2, y: window_height / 2 };
 
+    // Calculate planet sizes
+    for (var planet in config.planets) {
+        config.planets[planet].radius = config.planets[planet].radius / SUN_SIZE * SUN_PX * config.planets[planet].size_factor;
+        document.getElementById(planet).style.width = config.planets[planet].radius + 'px';
+    }
+
+    // Get biggest planet size by px
+    var biggest_planet = 0;
+    for (var planet in config.planets) {
+        biggest_planet = Math.max(biggest_planet, config.planets[planet].radius);
+    }
+
+    // Calculate system radius
+    system_radius = Math.min(window_width, window_height) * (1 - config.secure_area) - biggest_planet * 2;
+    document.getElementsByTagName('main')[0].style.width = system_radius + 'px';
+    document.getElementsByTagName('main')[0].style.height = system_radius + 'px';
+
+    // Set sun size
+    document.getElementById('sun').style.width = SUN_PX + 'px';
+    document.getElementById('sun').style.height = SUN_PX + 'px';
+
+    positionPlanets();
 }
 init();
 
@@ -53,9 +65,4 @@ init();
 function positionPlanets() {
 }
 
-function resize() {
-    window_width = window.innerWidth;
-    window_height = window.innerHeight;
-    positionPlanets();
-}
-window.addEventListener('resize', resize);
+window.addEventListener('resize', init);
