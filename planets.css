@@ -1,1 +1,8 @@
-/* All planet styling stuff */
+.planet {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    background-color: #fff;
+    display: grid;
+    place-content: center;
+}
