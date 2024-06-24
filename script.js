@@ -5,7 +5,6 @@
  * speed - time taken to complete one revolution around the sun in hours
  */
 var config = {
-    speed: 1,
     secure_area: 0.05,
     planets: {
         earth: {
@@ -79,7 +78,6 @@ function positionPlanets() {
     // All planets
     var angle = 0;
     for (var planet in planets) {
-        var speed = config.speed;
         var planet_element = document.getElementById(planet);
         var x = Math.cos(angle * (Math.PI / 180)) * planets[planet].distance_px;
         var y = Math.sin(angle * (Math.PI / 180)) * planets[planet].distance_px;
