@@ -7,14 +7,29 @@
 var config = {
     secure_area: 0.05,
     planets: {
-        earth: {
-            radius: 6371,
+        mercury: {
+            radius: 2439.7,
+            distance: 5,
+            size_factor: 10
+        },
+        venus: {
+            radius: 6051.8,
             distance: 10,
             size_factor: 10
         },
+        earth: {
+            radius: 6371,
+            distance: 15,
+            size_factor: 10
+        },
+        jupiter: {
+            radius: 69911,
+            distance: 20,
+            size_factor: 1
+        },
         mars: {
             radius: 3389.5,
-            distance: 20,
+            distance: 25,
             size_factor: 10
         }
     }
@@ -24,7 +39,7 @@ var config = {
 // CONFIG END
 // 
 const SUN_SIZE = 696340;
-const SUN_PX = 300;
+const SUN_PX = 250;
 const max_distance = Math.max(...Object.keys(config.planets).map(planet => config.planets[planet].distance));
 
 var system_center = {
@@ -66,7 +81,7 @@ function init() {
 
     // Calculate planet distances
     for (var p in planets) {
-        planets[p].distance_px = planets[p].distance / max_distance * system_diameter / 2;
+        planets[p].distance_px = planets[p].distance / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
     }
 
     positionPlanets();
