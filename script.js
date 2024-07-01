@@ -10,42 +10,50 @@ var config = {
         mercury: {
             radius: 2439.7,
             distance: 5,
-            size_factor: 5
+            size_factor: 5,
+            angle: 300
         },
         venus: {
             radius: 6051.8,
             distance: 10,
-            size_factor: 5
+            size_factor: 5,
+            angle: 270
         },
         earth: {
             radius: 6371,
             distance: 15,
-            size_factor: 5
+            size_factor: 5,
+            angle: 105
         },
         jupiter: {
             radius: 69911,
             distance: 25,
-            size_factor: 5
+            size_factor: 5,
+            angle: 210
         },
         mars: {
             radius: 3389.5,
             distance: 20,
-            size_factor: 5
+            size_factor: 5,
+            angle: 345
         },
         saturn: {
             radius: 58232,
             distance: 30,
-            size_factor: 5
+            size_factor: 5,
+            angle: 30
         },
         uranus: {
             radius: 25362,
             distance: 35,
-            size_factor: 5
+            size_factor: 5,
+            angle: 195
         },
         neptune: {
             radius: 24622,
             distance: 40,
-            size_factor: 5
+            size_factor: 5,
+            angle: 240
         },
     }
 };
