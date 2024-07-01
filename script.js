@@ -10,28 +10,43 @@ var config = {
         mercury: {
             radius: 2439.7,
             distance: 5,
-            size_factor: 10
+            size_factor: 5
         },
         venus: {
             radius: 6051.8,
             distance: 10,
-            size_factor: 10
+            size_factor: 5
         },
         earth: {
             radius: 6371,
             distance: 15,
-            size_factor: 10
+            size_factor: 5
         },
         jupiter: {
             radius: 69911,
-            distance: 20,
-            size_factor: 1
+            distance: 25,
+            size_factor: 5
         },
         mars: {
             radius: 3389.5,
-            distance: 25,
-            size_factor: 10
-        }
+            distance: 20,
+            size_factor: 5
+        },
+        saturn: {
+            radius: 58232,
+            distance: 30,
+            size_factor: 5
+        },
+        uranus: {
+            radius: 25362,
+            distance: 35,
+            size_factor: 5
+        },
+        neptune: {
+            radius: 24622,
+            distance: 40,
+            size_factor: 5
+        },
     }
 };
 
@@ -39,7 +54,7 @@ var config = {
 // CONFIG END
 // 
 const SUN_SIZE = 696340;
-const SUN_PX = 250;
+const SUN_PX = 150;
 const max_distance = Math.max(...Object.keys(config.planets).map(planet => config.planets[planet].distance));
 
 var system_center = {
@@ -88,10 +103,10 @@ function init() {
 }
 init();
 
+var angle = 0;
 
 function positionPlanets() {
     // All planets
-    var angle = 0;
     for (var planet in planets) {
         var planet_element = document.getElementById(planet);
         var x = Math.cos(angle * (Math.PI / 180)) * planets[planet].distance_px;
@@ -101,3 +116,5 @@ function positionPlanets() {
 }
 
 window.addEventListener('resize', init);
+
+window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
