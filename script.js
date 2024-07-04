@@ -91,12 +91,10 @@ var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
 var fps = 30;
 
-function init() {
+function init(noreset = false) {
+
     // Copy config planets to planets array
     planets = JSON.parse(JSON.stringify(CONFIG.planets));
-
-    // Reset time to 01.01.1970 00:00
-    time = 0;
 
     // Query window size
     var window_width = window.innerWidth;
@@ -130,6 +128,9 @@ function init() {
     }
 
     positionPlanets();
+
+    // Reset time to 01.01.1970 00:00
+    if (!noreset) time = 0;
 }
 init();
 
@@ -190,7 +191,4 @@ function setTimeFactor(factor, e) {
     last_btn = e;
 }
 
-// window.addEventListener('resize', init);
-
-// window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
-
+window.addEventListener('resize', () => init(true));
