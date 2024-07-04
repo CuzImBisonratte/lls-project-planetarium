@@ -88,6 +88,8 @@ var system_center = {
 var planets = [];
 var system_diameter;
 var time = 0; // Time is unix timestamp
+var time_per_second = 86400;
+var fps = 10;
 
 function init() {
     // Copy config planets to planets array
@@ -142,9 +144,28 @@ function positionPlanets() {
 }
 
 function tick() {
-    time++;
+    // Advance time
+    time += time_per_second / fps;
+    // Calculate planet angles
+    timeToPositions(time);
+    // Set day overlay
+    const date = new Date(time * 1000);
+    var timeD = date.getDate();
+    var timeM = date.getMonth() + 1;
+    var timeY = date.getFullYear();
+    timeD = timeD.toString().length < 2 ? "0" + timeD : timeD;
+    timeM = timeM.toString().length < 2 ? "0" + timeM : timeM;
+    document.getElementById("date").innerText = timeD + "." + timeM + "." + timeY;
 }
 
-window.addEventListener('resize', init);
+// Button actions
+var loopInterval;
+function pausePlay() {
+    if (loopInterval) { clearInterval(loopInterval); loopInterval = undefined; }
+    else loopInterval = setInterval(tick, 1000 / fps);
+}
+function setTimeFactor(factor) {
+    time_per_second = 86400 * factor;
+}
 
 window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
