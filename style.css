@@ -9,7 +9,7 @@ html {
 body {
     display: grid;
     place-content: center;
-    background-color: #f00;
+    background-color: #000;
 }
 
 main {
@@ -27,6 +27,8 @@ main {
     border-bottom-right-radius: 1rem;
     padding: 1rem;
     text-align: center;
+    border: solid #888;
+    border-width: 0 2px 2px 0;
 }
 
 #overlay-time h1 {
@@ -42,6 +44,8 @@ main {
     border-top-right-radius: 1rem;
     padding: 1rem;
     text-align: center;
+    border: solid #888;
+    border-width: 2px 2px 0 0;
 }
 
 #overlay-controls button {
