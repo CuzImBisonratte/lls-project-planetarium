@@ -37,6 +37,29 @@
                 <img src="planets/neptune.jpg" id="neptune" alt="" srcset="" />
             </div>
         </main>
+        <div id="overlay-time"><h1 id="date">01.01.1970</h1></div>
+        <div id="overlay-controls">
+            <button onclick="pausePlay()">
+                <!-- SVG by Heroicons.com -->
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z"
+                    />
+                </svg>
+            </button>
+            <button onclick="setTimeFactor(1)">1x</button>
+            <button onclick="setTimeFactor(10)">10x</button>
+            <button onclick="setTimeFactor(100)">100x</button>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
