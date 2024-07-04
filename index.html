@@ -39,7 +39,7 @@
         </main>
         <div id="overlay-time"><h1 id="date">01.01.1970</h1></div>
         <div id="overlay-controls">
-            <button onclick="pausePlay()">
+            <button id="startPause" onclick="pausePlay()">
                 <!-- SVG by Heroicons.com -->
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +59,7 @@
             <button onclick="setTimeFactor(1, this)" class="active">1x</button>
             <button onclick="setTimeFactor(10, this)">10x</button>
             <button onclick="setTimeFactor(100, this)">100x</button>
+            <button onclick="setTimeFactor(365, this)">365x</button>
         </div>
         <script src="script.js"></script>
     </body>

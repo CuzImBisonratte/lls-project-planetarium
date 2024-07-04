@@ -89,7 +89,7 @@ var planets = [];
 var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
-var fps = 10;
+var fps = 30;
 
 function init() {
     // Copy config planets to planets array
