@@ -143,6 +143,22 @@ function positionPlanets() {
     }
 }
 
+function timeToPositions(time) {
+    for (planet in planets) {
+        // Remove time overhead
+        angle = (time % planets[planet].sidereal_year);
+        // Get revolution percentage
+        angle /= planets[planet].sidereal_year;
+        // Percentage to degrees
+        angle *= 360;
+        // Add starting angle
+        angle += CONFIG.planets[planet].angle;
+        // Set angle
+        planets[planet].angle = angle;
+    }
+    positionPlanets();
+}
+
 function tick() {
     // Advance time
     time += time_per_second / fps;
@@ -163,9 +179,15 @@ var loopInterval;
 function pausePlay() {
     if (loopInterval) { clearInterval(loopInterval); loopInterval = undefined; }
     else loopInterval = setInterval(tick, 1000 / fps);
+    // Set button
+    loopInterval ? document.getElementById("startPause").classList.add("active") : document.getElementById("startPause").classList.remove("active");
 }
-function setTimeFactor(factor) {
+var last_btn = document.getElementById("overlay-controls").childNodes[3];
+function setTimeFactor(factor, e) {
     time_per_second = 86400 * factor;
+    last_btn.classList.remove("active");
+    e.classList.add("active");
+    last_btn = e;
 }
 
 window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
