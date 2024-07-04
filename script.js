@@ -11,49 +11,65 @@ var config = {
             radius: 2439.7,
             distance: 5,
             size_factor: 5,
-            angle: 300
+            angle: 300,
+            sidereal_year: 88 * 86400,
+            sidereal_day: 58.65 * 86400
         },
         venus: {
             radius: 6051.8,
             distance: 10,
             size_factor: 5,
-            angle: 270
+            angle: 270,
+            sidereal_year: 224.701 * 86400,
+            sidereal_day: 243 * 86400
         },
         earth: {
             radius: 6371,
             distance: 15,
             size_factor: 5,
-            angle: 105
+            angle: 105,
+            sidereal_year: 365.256 * 86400,
+            sidereal_day: 23.934 * 86400
         },
         jupiter: {
             radius: 69911,
             distance: 25,
             size_factor: 5,
-            angle: 210
+            angle: 210,
+            sidereal_year: 4332.59 * 86400,
+            sidereal_day: 9.925 * 3600
         },
         mars: {
             radius: 3389.5,
             distance: 20,
             size_factor: 5,
-            angle: 345
+            angle: 345,
+            sidereal_year: 687 * 86400,
+            sidereal_day: 24 * 3600 + 37 * 60 + 22
         },
         saturn: {
             radius: 58232,
             distance: 30,
             size_factor: 5,
-            angle: 30
+            angle: 30,
+            sidereal_year: 10759.22 * 86400,
+            sidereal_day: 10.7 * 3600
         },
         uranus: {
             radius: 25362,
             distance: 35,
             size_factor: 5,
-            angle: 195
+            angle: 195,
+            sidereal_year: 84 * 365 * 86400 + 16 * 3600,
+            sidereal_day: 17 * 3600 + 14 * 60 + 24
         },
         neptune: {
             radius: 24622,
             distance: 40,
             size_factor: 5,
-            angle: 240
+            angle: 240,
+            sidereal_year: 164 * 86400 + 288 * 3600,
+            sidereal_day: 15 * 86400 + 57 * 3600 + 59
         },
     }
 };
