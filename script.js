@@ -4,7 +4,7 @@
  * distance - distance of the planet from the sun in AU
  * speed - time taken to complete one revolution around the sun in hours
  */
-var config = {
+const CONFIG = {
     secure_area: 0.05,
     planets: {
         mercury: {
@@ -79,7 +79,7 @@ var config = {
 // 
 const SUN_SIZE = 696340;
 const SUN_PX = 100;
-const max_distance = Math.max(...Object.keys(config.planets).map(planet => config.planets[planet].distance));
+const max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => CONFIG.planets[planet].distance));
 
 var system_center = {
     x: 0,
@@ -91,7 +91,7 @@ var time = 0; // Time is unix timestamp
 
 function init() {
     // Copy config planets to planets array
-    planets = JSON.parse(JSON.stringify(config.planets));
+    planets = JSON.parse(JSON.stringify(CONFIG.planets));
 
     // Reset time to 01.01.1970 00:00
     time = 0;
@@ -114,7 +114,7 @@ function init() {
     }
 
     // Calculate system radius
-    system_diameter = Math.min(window_width, window_height) * (1 - config.secure_area) - (biggest_planet / 2);
+    system_diameter = Math.min(window_width, window_height) * (1 - CONFIG.secure_area) - (biggest_planet / 2);
     document.getElementsByTagName('main')[0].style.width = system_diameter + 'px';
     document.getElementsByTagName('main')[0].style.height = system_diameter + 'px';
 
