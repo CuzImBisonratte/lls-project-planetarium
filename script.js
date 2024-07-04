@@ -10,6 +10,7 @@ const CONFIG = {
         mercury: {
             radius: 2439.7,
             distance: 5,
+            real_distance: 0.39,
             size_factor: 5,
             angle: 300,
             sidereal_year: 88 * 86400,
@@ -18,6 +19,7 @@ const CONFIG = {
         venus: {
             radius: 6051.8,
             distance: 10,
+            real_distance: 0.72,
             size_factor: 5,
             angle: 270,
             sidereal_year: 224.701 * 86400,
@@ -26,6 +28,7 @@ const CONFIG = {
         earth: {
             radius: 6371,
             distance: 15,
+            real_distance: 1,
             size_factor: 5,
             angle: 105,
             sidereal_year: 365.256 * 86400,
@@ -34,6 +37,7 @@ const CONFIG = {
         jupiter: {
             radius: 69911,
             distance: 25,
+            real_distance: 5.2,
             size_factor: 5,
             angle: 210,
             sidereal_year: 4332.59 * 86400,
@@ -42,6 +46,7 @@ const CONFIG = {
         mars: {
             radius: 3389.5,
             distance: 20,
+            real_distance: 1.52,
             size_factor: 5,
             angle: 345,
             sidereal_year: 687 * 86400,
@@ -50,6 +55,7 @@ const CONFIG = {
         saturn: {
             radius: 58232,
             distance: 30,
+            real_distance: 9.58,
             size_factor: 5,
             angle: 30,
             sidereal_year: 10759.22 * 86400,
@@ -58,6 +64,7 @@ const CONFIG = {
         uranus: {
             radius: 25362,
             distance: 35,
+            real_distance: 19.22,
             size_factor: 5,
             angle: 195,
             sidereal_year: 84 * 365 * 86400 + 16 * 3600,
@@ -66,6 +73,7 @@ const CONFIG = {
         neptune: {
             radius: 24622,
             distance: 40,
+            real_distance: 30.05,
             size_factor: 5,
             angle: 240,
             sidereal_year: 164 * 365 * 86400 + 288 * 86400,
@@ -78,18 +86,22 @@ const CONFIG = {
 // CONFIG END
 // 
 const SUN_SIZE = 696340;
-const SUN_PX = 100;
-const max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => CONFIG.planets[planet].distance));
+const SUN_PX = 75;
 
 var system_center = {
     x: 0,
     y: 0
+};
+var settings = {
+    "realisticDistance": false,
+    "realisticSize": true,
 };
 var planets = [];
 var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
 var fps = 30;
+
 
 function init(noreset = false) {
 
@@ -103,7 +115,7 @@ function init(noreset = false) {
 
     // Calculate planet sizes
     for (var p in planets) {
-        planets[p].radius = planets[p].radius / SUN_SIZE * SUN_PX * planets[p].size_factor;
+        settings.realisticSize ? planets[p].radius = planets[p].radius / SUN_SIZE * SUN_PX * planets[p].size_factor : planets[p].radius = "50";
         document.getElementById(p).style.width = planets[p].radius + 'px';
     }
 
@@ -123,8 +135,9 @@ function init(noreset = false) {
     document.getElementById('sun').style.height = SUN_PX + 'px';
 
     // Calculate planet distances
+    var max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => settings.realisticDistance ? CONFIG.planets[planet].distance : CONFIG.planets[planet].real_distance));
     for (var p in planets) {
-        planets[p].distance_px = planets[p].distance / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
+        planets[p].distance_px = (settings.realisticDistance ? planets[p].distance : planets[p].real_distance) / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
     }
 
     positionPlanets();
@@ -192,3 +205,27 @@ function setTimeFactor(factor, e) {
 }
 
 window.addEventListener('resize', () => init(true));
+
+// 
+// Settings
+// 
+
+function openSettings() {
+    document.getElementById("overlay-settings").style.display = "grid";
+}
+
+function closeSettings() {
+    document.getElementById("overlay-settings").style.display = "none";
+}
+
+toggleRealisticDistance = () => {
+    settings.realisticDistance = !settings.realisticDistance;
+    document.getElementById("settingRealisticDistance").classList = settings.realisticDistance ? "setting-on" : "setting-off";
+    init(true);
+}
+
+toggleRealisticSize = () => {
+    settings.realisticSize = !settings.realisticSize;
+    document.getElementById("settingRealisticSize").classList = settings.realisticSize ? "setting-on" : "setting-off";
+    init(true);
+}

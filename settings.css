@@ -1,0 +1,76 @@
+#overlay-settings-buttons {
+    position: fixed;
+    top: calc(50% - 20px);
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    border-radius: 0 1rem 1rem 0;
+    padding: 1rem;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    border: solid #888;
+    border-width: 2px 2px 2px 0;
+    padding: 0.5rem;
+}
+
+#overlay-settings-buttons button {
+    background-color: #000;
+    color: #fff;
+    padding: 0.5rem;
+    border: 0px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+
+#overlay-settings {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #00000088;
+    color: #fff;
+    text-align: center;
+    display: none;
+    place-content: center;
+}
+
+#settings {
+    min-width: min(400px, 90vw);
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: left;
+}
+
+#settings-close {
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: right;
+}
+
+.setting-on {
+    background-color: #080;
+}
+
+.setting-off {
+    background-color: #800;
+}
+
+#settings button {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0;
+    cursor: pointer;
+    color: #fff;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.settings-note {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
