@@ -4,3 +4,7 @@
     display: grid;
     place-content: center;
 }
+
+.planet img {
+    border-radius: 100%;
+}
