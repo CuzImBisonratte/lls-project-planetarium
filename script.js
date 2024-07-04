@@ -10,42 +10,50 @@ var config = {
         mercury: {
             radius: 2439.7,
             distance: 5,
-            size_factor: 5
+            size_factor: 5,
+            angle: 300
         },
         venus: {
             radius: 6051.8,
             distance: 10,
-            size_factor: 5
+            size_factor: 5,
+            angle: 270
         },
         earth: {
             radius: 6371,
             distance: 15,
-            size_factor: 5
+            size_factor: 5,
+            angle: 105
         },
         jupiter: {
             radius: 69911,
             distance: 25,
-            size_factor: 5
+            size_factor: 5,
+            angle: 210
         },
         mars: {
             radius: 3389.5,
             distance: 20,
-            size_factor: 5
+            size_factor: 5,
+            angle: 345
         },
         saturn: {
             radius: 58232,
             distance: 30,
-            size_factor: 5
+            size_factor: 5,
+            angle: 30
         },
         uranus: {
             radius: 25362,
             distance: 35,
-            size_factor: 5
+            size_factor: 5,
+            angle: 195
         },
         neptune: {
             radius: 24622,
             distance: 40,
-            size_factor: 5
+            size_factor: 5,
+            angle: 240
         },
     }
 };
@@ -63,10 +71,14 @@ var system_center = {
 };
 var planets = [];
 var system_diameter;
+var time = 0; // Time is unix timestamp
 
 function init() {
     // Copy config planets to planets array
     planets = JSON.parse(JSON.stringify(config.planets));
+
+    // Reset time to 01.01.1970 00:00
+    time = 0;
 
     // Query window size
     var window_width = window.innerWidth;
@@ -103,8 +115,6 @@ function init() {
 }
 init();
 
-var angle = 0;
-
 function positionPlanets() {
     // All planets
     for (var planet in planets) {
@@ -113,6 +123,10 @@ function positionPlanets() {
         var y = Math.sin(angle * (Math.PI / 180)) * planets[planet].distance_px;
         planet_element.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
     }
+}
+
+function tick() {
+    time++;
 }
 
 window.addEventListener('resize', init);
