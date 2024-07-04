@@ -143,7 +143,7 @@ function positionPlanets() {
     }
 }
 
-function timeToPositions(time) {
+function timeToPositions() {
     for (planet in planets) {
         // Remove time overhead
         angle = (time % planets[planet].sidereal_year);
