@@ -190,4 +190,7 @@ function setTimeFactor(factor, e) {
     last_btn = e;
 }
 
-window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
+// window.addEventListener('resize', init);
+
+// window.setInterval(() => { angle += 0.25; positionPlanets(); }, 25);
+
