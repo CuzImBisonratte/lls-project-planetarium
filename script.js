@@ -135,8 +135,8 @@ function positionPlanets() {
     // All planets
     for (var planet in planets) {
         var planet_element = document.getElementById(planet);
-        var x = Math.cos(angle * (Math.PI / 180)) * planets[planet].distance_px;
-        var y = Math.sin(angle * (Math.PI / 180)) * planets[planet].distance_px;
+        var x = Math.cos(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
+        var y = Math.sin(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
         planet_element.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
     }
 }
