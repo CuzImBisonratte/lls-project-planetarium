@@ -135,9 +135,9 @@ function init(noreset = false) {
     document.getElementById('sun').style.height = SUN_PX + 'px';
 
     // Calculate planet distances
-    var max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => settings.realisticDistance ? CONFIG.planets[planet].distance : CONFIG.planets[planet].real_distance));
+    var max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => settings.realisticDistance ? CONFIG.planets[planet].real_distance : CONFIG.planets[planet].distance));
     for (var p in planets) {
-        planets[p].distance_px = (settings.realisticDistance ? planets[p].distance : planets[p].real_distance) / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
+        planets[p].distance_px = (settings.realisticDistance ? planets[p].real_distance : planets[p].distance) / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
     }
 
     positionPlanets();
