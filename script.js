@@ -68,7 +68,7 @@ const CONFIG = {
             distance: 40,
             size_factor: 5,
             angle: 240,
-            sidereal_year: 164 * 86400 + 288 * 3600,
+            sidereal_year: 164 * 365 * 86400 + 288 * 86400,
             sidereal_day: 15 * 86400 + 57 * 3600 + 59
         },
     }
