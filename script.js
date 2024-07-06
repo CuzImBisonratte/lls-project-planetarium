@@ -236,6 +236,7 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft' || e.key === 'a') move_x += 10;
     if (e.key === 'ArrowRight' || e.key === 'd') move_x -= 10;
     positionPlanets();
+    orbits();
 });
 
 // 
@@ -295,6 +296,7 @@ function orbits() {
         orbit.classList.add("orbit");
         orbit.style.width = radius * 2 * zoom_factor + "px";
         orbit.style.height = radius * 2 * zoom_factor + "px";
+        orbit.style.transform = "translate(" + move_x + "px, " + move_y + "px)";
         orbit.style.borderRadius = "50%";
         orbit.style.border = "1px solid rgba(255, 255, 255, 0.25)";
         orbit_wrapper.appendChild(orbit);
