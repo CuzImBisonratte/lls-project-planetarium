@@ -87,6 +87,7 @@ const CONFIG = {
 // 
 const SUN_SIZE = 696340;
 const SUN_PX = 75;
+const MAX_ZOOM = 7.5;
 
 var system_center = {
     x: 0,
@@ -96,12 +97,14 @@ var settings = {
     "realisticDistance": false,
     "realisticSize": true,
 };
+var zoom_factor = 1;
+var move_x = 0;
+var move_y = 0;
 var planets = [];
 var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
 var fps = 30;
-
 
 function init(noreset = false) {
 
@@ -153,6 +156,15 @@ function positionPlanets() {
         var planet_element = document.getElementById(planet);
         var x = Math.cos(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
         var y = Math.sin(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
+        // Zoom factor
+        x *= zoom_factor;
+        y *= zoom_factor;
+        planet_element.style.width = planets[planet].radius * zoom_factor + 'px';
+        // Move system
+        x += move_x;
+        y += move_y;
+        document.getElementById("sun").style.transform = 'translate(' + move_x + 'px, ' + move_y + 'px) scale(' + zoom_factor + ')';
+        // Set planet position
         planet_element.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
     }
 }
@@ -205,6 +217,21 @@ function setTimeFactor(factor, e) {
 }
 
 window.addEventListener('resize', () => init(true));
+
+// Zoom (scroll)
+window.addEventListener('wheel', (e) => {
+    if (e.deltaY < 0) { if (zoom_factor < MAX_ZOOM) zoom_factor *= 1.1 }
+    else if (zoom_factor > 1) zoom_factor /= 1.1;
+    positionPlanets();
+});
+// Movement (arrow keys / wasd)
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'w') move_y += 10;
+    if (e.key === 'ArrowDown' || e.key === 's') move_y -= 10;
+    if (e.key === 'ArrowLeft' || e.key === 'a') move_x += 10;
+    if (e.key === 'ArrowRight' || e.key === 'd') move_x -= 10;
+    positionPlanets();
+});
 
 // 
 // Settings
