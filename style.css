@@ -83,3 +83,19 @@ main {
     display: grid;
     place-content: center;
 }
+
+.planetSizeButton {
+    background-color: #000;
+    display: inline-block !important;
+}
+
+.planetSizeActive {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+button[disabled] {
+    background-color: #888 !important;
+    color: #fff !important;
+    cursor: not-allowed !important;
+}

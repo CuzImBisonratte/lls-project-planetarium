@@ -257,13 +257,29 @@ toggleRealisticDistance = () => {
     document.getElementById("settingRealisticDistance").classList = settings.realisticDistance ? "setting-on" : "setting-off";
     init(true);
     orbits();
+    // Set planet sizes to default if realistic distance is being turned off
+    if (!settings.realisticDistance) setPlanetSize(5, document.getElementsByClassName("planetSizeButton")[1]);
+    // Check which planetSize-buttons should be disabled
+    if (settings.realisticDistance) {
+        document.getElementsByClassName("planetSizeButton")[2].disabled = false;
+        document.getElementsByClassName("planetSizeButton")[3].disabled = false;
+    } else {
+        document.getElementsByClassName("planetSizeButton")[2].disabled = true;
+        document.getElementsByClassName("planetSizeButton")[3].disabled = true;
+    }
 }
 
-document.getElementById("planetSize").addEventListener("input", (e) => {
-    settings.planet_size_factor = e.target.value;
+var last_btn = document.getElementsByClassName("planetSizeButton")[1];
+setPlanetSize = (factor, e) => {
+    settings.planet_size_factor = factor;
+    last_btn.classList.remove("planetSizeActive");
+    e.classList.add("planetSizeActive");
+    last_btn = e;
+    // Recalculate planet sizes
     init(true);
+    // Reset orbits
     orbits();
-});
+}
 
 togglePlanetOrbits = () => {
     settings.draw_orbits = !settings.draw_orbits;

@@ -98,15 +98,40 @@
                 <label id="settingPlanetSize" for="planetSize">
                     Distanzenproportionale Planeten-Radienskalierung </label
                 ><br />
-                <input
-                    type="number"
-                    id="planetSize"
-                    value="5"
-                    min="1"
-                    max="10"
-                    step="0.5"
-                    autocomplete="off"
-                />
+                <button
+                    class="planetSizeButton"
+                    onclick="setPlanetSize(1, this)"
+                >
+                    1x
+                </button>
+                <button
+                    class="planetSizeButton planetSizeActive"
+                    onclick="setPlanetSize(5, this)"
+                >
+                    5x
+                </button>
+                <button
+                    class="planetSizeButton"
+                    onclick="setPlanetSize(50, this)"
+                    disabled
+                >
+                    50x
+                </button>
+                <button
+                    class="planetSizeButton"
+                    onclick="setPlanetSize(5000, this)"
+                    disabled
+                >
+                    5000x
+                </button>
+                <hr />
+                <button
+                    onclick="toggleEarthMoon()"
+                    id="settingShowMoon"
+                    class="setting-off"
+                >
+                    Zeige Erdenmond
+                </button>
                 <hr />
                 <button
                     onclick="togglePlanetOrbits()"
