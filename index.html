@@ -81,6 +81,7 @@
                 </svg>
             </button>
         </div>
+        <div id="orbits"></div>
         <div id="overlay-settings">
             <div id="settings">
                 <div id="settings-close" onclick="closeSettings()">
@@ -107,6 +108,13 @@
                     autocomplete="off"
                 />
                 <hr />
+                <button
+                    onclick="togglePlanetOrbits()"
+                    id="settingPlanetOrbits"
+                    class="setting-off"
+                >
+                    Zeige Planetenbahnen
+                </button>
             </div>
         </div>
         <script src="script.js"></script>

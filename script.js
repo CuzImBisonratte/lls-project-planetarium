@@ -79,7 +79,7 @@ const CONFIG = {
 // CONFIG END
 // 
 const SUN_SIZE = 696340;
-const MAX_ZOOM = 1000;
+const MAX_ZOOM = 50;
 const APHEL_DISTANCE = 30.385 * 149597870; // Aphel distance of Neptune in KM
 
 var system_center = {
@@ -89,6 +89,7 @@ var system_center = {
 var settings = {
     "realisticDistance": false,
     "planet_size_factor": 5,
+    "draw_orbits": false
 };
 var zoom_factor = 1;
 var move_x = 0;
@@ -225,6 +226,7 @@ window.addEventListener('wheel', (e) => {
     if (e.deltaY < 0) { if (zoom_factor < MAX_ZOOM) zoom_factor *= 1.25 }
     else if (zoom_factor > 1) zoom_factor /= 1.25;
     positionPlanets();
+    orbits();
 });
 // Movement (arrow keys / wasd)
 window.addEventListener('keydown', (e) => {
@@ -254,9 +256,35 @@ toggleRealisticDistance = () => {
     settings.realisticDistance = !settings.realisticDistance;
     document.getElementById("settingRealisticDistance").classList = settings.realisticDistance ? "setting-on" : "setting-off";
     init(true);
+    orbits();
 }
 
 document.getElementById("planetSize").addEventListener("input", (e) => {
     settings.planet_size_factor = e.target.value;
     init(true);
 });
+
+togglePlanetOrbits = () => {
+    settings.draw_orbits = !settings.draw_orbits;
+    document.getElementById("settingPlanetOrbits").classList = settings.draw_orbits ? "setting-on" : "setting-off";
+    orbits();
+}
+
+function orbits() {
+    document.querySelectorAll(".orbit").forEach(e => e.remove());
+    if (!settings.draw_orbits) return;
+    for (var planet in planets) {
+        // Create orbit element (div circle)
+        const orbit_wrapper = document.createElement("div");
+        orbit_wrapper.classList.add("orbit-wrapper");
+        const orbit = document.createElement("div");
+        const radius = planets[planet].distance_px;
+        orbit.classList.add("orbit");
+        orbit.style.width = radius * 2 * zoom_factor + "px";
+        orbit.style.height = radius * 2 * zoom_factor + "px";
+        orbit.style.borderRadius = "50%";
+        orbit.style.border = "1px solid rgba(255, 255, 255, 0.25)";
+        orbit_wrapper.appendChild(orbit);
+        document.getElementById("orbits").appendChild(orbit_wrapper);
+    }
+}
