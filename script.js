@@ -80,6 +80,7 @@ const CONFIG = {
 // 
 const SUN_SIZE = 696340;
 const MAX_ZOOM = 50;
+const FPS = 30;
 const APHEL_DISTANCE = 30.385 * 149597870; // Aphel distance of Neptune in KM
 
 var system_center = {
@@ -98,7 +99,6 @@ var planets = [];
 var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
-var fps = 30;
 var sun_px;
 
 function init(noreset = false) {
@@ -187,7 +187,7 @@ function timeToPositions() {
 
 function tick() {
     // Advance time
-    time += time_per_second / fps;
+    time += time_per_second / FPS;
     // Calculate planet angles
     timeToPositions(time);
     // Set day overlay
@@ -204,7 +204,7 @@ function tick() {
 var loopInterval;
 function pausePlay() {
     if (loopInterval) { clearInterval(loopInterval); loopInterval = undefined; }
-    else loopInterval = setInterval(tick, 1000 / fps);
+    else loopInterval = setInterval(tick, 1000 / FPS);
     // Set button
     loopInterval ? document.getElementById("startPause").classList.add("active") : document.getElementById("startPause").classList.remove("active");
 }
