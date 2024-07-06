@@ -208,12 +208,10 @@ function pausePlay() {
     // Set button
     loopInterval ? document.getElementById("startPause").classList.add("active") : document.getElementById("startPause").classList.remove("active");
 }
-var last_btn = document.getElementById("overlay-controls").childNodes[3];
 function setTimeFactor(factor, e) {
     time_per_second = 86400 * factor;
-    last_btn.classList.remove("active");
-    e.classList.add("active");
-    last_btn = e;
+    last_btn = document.getElementsByClassName("timeFactorActive")[0].classList.remove("timeFactorActive");
+    e.classList.add("timeFactorActive");
 }
 
 window.addEventListener('resize', () => init(true));
@@ -268,11 +266,9 @@ toggleRealisticDistance = () => {
         document.getElementsByClassName("planetSizeButton")[3].disabled = true;
     }
 }
-
-var last_btn = document.getElementsByClassName("planetSizeButton")[1];
 setPlanetSize = (factor, e) => {
     settings.planet_size_factor = factor;
-    last_btn.classList.remove("planetSizeActive");
+    document.getElementsByClassName("planetSizeActive")[0].classList.remove("planetSizeActive");
     e.classList.add("planetSizeActive");
     last_btn = e;
     // Recalculate planet sizes

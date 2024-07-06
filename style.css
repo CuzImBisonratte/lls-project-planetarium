@@ -63,7 +63,9 @@ main {
     scale: 2;
 }
 
-.active {
+.active,
+.timeFactorActive,
+.planetSizeActive {
     background-color: #fff !important;
     color: #000 !important;
 }
@@ -87,11 +89,6 @@ main {
 .planetSizeButton {
     background-color: #000;
     display: inline-block !important;
-}
-
-.planetSizeActive {
-    background-color: #fff !important;
-    color: #000 !important;
 }
 
 button[disabled] {
