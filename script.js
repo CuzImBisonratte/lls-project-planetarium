@@ -6,6 +6,7 @@
  */
 const CONFIG = {
     secure_area: 0.05,
+    sun_px: 150,
     planets: {
         mercury: {
             radius: 2439.7,
@@ -78,8 +79,8 @@ const CONFIG = {
 // CONFIG END
 // 
 const SUN_SIZE = 696340;
-const SUN_PX = 75;
-const MAX_ZOOM = 75;
+const MAX_ZOOM = 1000;
+const APHEL_DISTANCE = 30.385 * 149597870; // Aphel distance of Neptune in KM
 
 var system_center = {
     x: 0,
@@ -97,6 +98,7 @@ var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
 var fps = 30;
+var sun_px;
 
 function init(noreset = false) {
 
@@ -108,9 +110,14 @@ function init(noreset = false) {
     var window_height = window.innerHeight;
     system_center = { x: window_width / 2, y: window_height / 2 };
 
+    // Set sun size
+    sun_px = settings.realisticDistance
+        ? Math.min(window_width, window_height) * (1 - CONFIG.secure_area) / 2 * SUN_SIZE / APHEL_DISTANCE
+        : CONFIG.sun_px;
+
     // Calculate planet sizes
     for (var p in planets) {
-        planets[p].radius = planets[p].radius / SUN_SIZE * SUN_PX * settings.planet_size_factor;
+        planets[p].radius = planets[p].radius / SUN_SIZE * sun_px * settings.planet_size_factor;
         document.getElementById(p).style.width = planets[p].radius + 'px';
     }
 
@@ -126,13 +133,13 @@ function init(noreset = false) {
     document.getElementsByTagName('main')[0].style.height = system_diameter + 'px';
 
     // Set sun size
-    document.getElementById('sun').style.width = SUN_PX + 'px';
-    document.getElementById('sun').style.height = SUN_PX + 'px';
+    document.getElementById('sun').style.width = sun_px + 'px';
+    document.getElementById('sun').style.height = sun_px + 'px';
 
     // Calculate planet distances
     var max_distance = Math.max(...Object.keys(CONFIG.planets).map(planet => settings.realisticDistance ? CONFIG.planets[planet].real_distance : CONFIG.planets[planet].distance));
     for (var p in planets) {
-        planets[p].distance_px = (settings.realisticDistance ? planets[p].real_distance : planets[p].distance) / max_distance * (system_diameter / 2 - SUN_PX / 2) + (SUN_PX / 2);
+        planets[p].distance_px = (settings.realisticDistance ? planets[p].real_distance : planets[p].distance) / max_distance * (system_diameter / 2 - sun_px / 2) + (sun_px / 2);
     }
 
     positionPlanets();
@@ -215,8 +222,8 @@ window.addEventListener('wheel', (e) => {
     // Check if settings are open
     if (document.getElementById("overlay-settings").style.display === "grid") return;
     // Adjust zoom factor
-    if (e.deltaY < 0) { if (zoom_factor < MAX_ZOOM) zoom_factor *= 1.1 }
-    else if (zoom_factor > 1) zoom_factor /= 1.1;
+    if (e.deltaY < 0) { if (zoom_factor < MAX_ZOOM) zoom_factor *= 1.25 }
+    else if (zoom_factor > 1) zoom_factor /= 1.25;
     positionPlanets();
 });
 // Movement (arrow keys / wasd)
