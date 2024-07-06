@@ -262,6 +262,7 @@ toggleRealisticDistance = () => {
 document.getElementById("planetSize").addEventListener("input", (e) => {
     settings.planet_size_factor = e.target.value;
     init(true);
+    orbits();
 });
 
 togglePlanetOrbits = () => {
