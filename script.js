@@ -11,7 +11,6 @@ const CONFIG = {
             radius: 2439.7,
             distance: 5,
             real_distance: 0.39,
-            size_factor: 5,
             angle: 300,
             sidereal_year: 88 * 86400,
             sidereal_day: 58.65 * 86400
@@ -20,7 +19,6 @@ const CONFIG = {
             radius: 6051.8,
             distance: 10,
             real_distance: 0.72,
-            size_factor: 5,
             angle: 270,
             sidereal_year: 224.701 * 86400,
             sidereal_day: 243 * 86400
@@ -29,7 +27,6 @@ const CONFIG = {
             radius: 6371,
             distance: 15,
             real_distance: 1,
-            size_factor: 5,
             angle: 105,
             sidereal_year: 365.256 * 86400,
             sidereal_day: 23.934 * 86400
@@ -38,7 +35,6 @@ const CONFIG = {
             radius: 69911,
             distance: 25,
             real_distance: 5.2,
-            size_factor: 5,
             angle: 210,
             sidereal_year: 4332.59 * 86400,
             sidereal_day: 9.925 * 3600
@@ -47,7 +43,6 @@ const CONFIG = {
             radius: 3389.5,
             distance: 20,
             real_distance: 1.52,
-            size_factor: 5,
             angle: 345,
             sidereal_year: 687 * 86400,
             sidereal_day: 24 * 3600 + 37 * 60 + 22
@@ -56,7 +51,6 @@ const CONFIG = {
             radius: 58232,
             distance: 30,
             real_distance: 9.58,
-            size_factor: 5,
             angle: 30,
             sidereal_year: 10759.22 * 86400,
             sidereal_day: 10.7 * 3600
@@ -65,7 +59,6 @@ const CONFIG = {
             radius: 25362,
             distance: 35,
             real_distance: 19.22,
-            size_factor: 5,
             angle: 195,
             sidereal_year: 84 * 365 * 86400 + 16 * 3600,
             sidereal_day: 17 * 3600 + 14 * 60 + 24
@@ -74,7 +67,6 @@ const CONFIG = {
             radius: 24622,
             distance: 40,
             real_distance: 30.05,
-            size_factor: 5,
             angle: 240,
             sidereal_year: 164 * 365 * 86400 + 288 * 86400,
             sidereal_day: 15 * 86400 + 57 * 3600 + 59
@@ -87,7 +79,7 @@ const CONFIG = {
 // 
 const SUN_SIZE = 696340;
 const SUN_PX = 75;
-const MAX_ZOOM = 7.5;
+const MAX_ZOOM = 75;
 
 var system_center = {
     x: 0,
@@ -95,7 +87,7 @@ var system_center = {
 };
 var settings = {
     "realisticDistance": false,
-    "realisticSize": true,
+    "planet_size_factor": 5,
 };
 var zoom_factor = 1;
 var move_x = 0;
@@ -118,7 +110,7 @@ function init(noreset = false) {
 
     // Calculate planet sizes
     for (var p in planets) {
-        settings.realisticSize ? planets[p].radius = planets[p].radius / SUN_SIZE * SUN_PX * planets[p].size_factor : planets[p].radius = "50";
+        planets[p].radius = planets[p].radius / SUN_SIZE * SUN_PX * settings.planet_size_factor;
         document.getElementById(p).style.width = planets[p].radius + 'px';
     }
 
@@ -220,12 +212,18 @@ window.addEventListener('resize', () => init(true));
 
 // Zoom (scroll)
 window.addEventListener('wheel', (e) => {
+    // Check if settings are open
+    if (document.getElementById("overlay-settings").style.display === "grid") return;
+    // Adjust zoom factor
     if (e.deltaY < 0) { if (zoom_factor < MAX_ZOOM) zoom_factor *= 1.1 }
     else if (zoom_factor > 1) zoom_factor /= 1.1;
     positionPlanets();
 });
 // Movement (arrow keys / wasd)
 window.addEventListener('keydown', (e) => {
+    // Check if settings are open
+    if (document.getElementById("overlay-settings").style.display === "grid") return;
+    // Check for arrow keys or wasd
     if (e.key === 'ArrowUp' || e.key === 'w') move_y += 10;
     if (e.key === 'ArrowDown' || e.key === 's') move_y -= 10;
     if (e.key === 'ArrowLeft' || e.key === 'a') move_x += 10;
@@ -251,8 +249,7 @@ toggleRealisticDistance = () => {
     init(true);
 }
 
-toggleRealisticSize = () => {
-    settings.realisticSize = !settings.realisticSize;
-    document.getElementById("settingRealisticSize").classList = settings.realisticSize ? "setting-on" : "setting-off";
+document.getElementById("planetSize").addEventListener("input", (e) => {
+    settings.planet_size_factor = e.target.value;
     init(true);
-}
+});
