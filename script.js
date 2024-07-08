@@ -167,15 +167,15 @@ function positionPlanets() {
     // All planets
     for (var planet in planets) {
         var planet_element = document.getElementById(planet);
-        var x = Math.cos(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
-        var y = Math.sin(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
+        planets[planet].x = Math.cos(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
+        planets[planet].y = Math.sin(planets[planet].angle * (Math.PI / 180)) * planets[planet].distance_px;
         // Zoom factor
-        x *= zoom_factor;
-        y *= zoom_factor;
+        planets[planet].x *= zoom_factor;
+        planets[planet].y *= zoom_factor;
         planet_element.style.width = planets[planet].radius * zoom_factor + 'px';
         // Move system
-        x += move_x;
-        y += move_y;
+        planets[planet].x += move_x;
+        planets[planet].y += move_y;
         document.getElementById("sun").style.transform = 'translate(' + move_x + 'px, ' + move_y + 'px) scale(' + zoom_factor + ')';
         // Set planet position
     }
