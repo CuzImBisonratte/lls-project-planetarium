@@ -37,6 +37,9 @@
             <div class="planet">
                 <img src="planets/neptune.jpg" id="neptune" alt="" srcset="" />
             </div>
+            <div class="moon">
+                <img src="planets/moon.jpg" id="moon" alt="" srcset="" />
+            </div>
         </main>
         <div id="overlay-time"><h1 id="date">01.01.1970</h1></div>
         <div id="overlay-controls">
@@ -133,6 +136,14 @@
                     class="setting-off"
                 >
                     Zeige Planetenbahnen
+                </button>
+                <hr />
+                <button
+                    onclick="toggleEarthMoon()"
+                    id="settingEarthMoon"
+                    class="setting-off"
+                >
+                    Zeige Erdenmond
                 </button>
             </div>
         </div>

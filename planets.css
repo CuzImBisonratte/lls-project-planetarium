@@ -1,10 +1,16 @@
-.planet {
+.planet,
+.moon {
     width: 0px;
     height: 0px;
     display: grid;
     place-content: center;
 }
 
-.planet img {
+.planet img,
+.moon img {
     border-radius: 100%;
+}
+
+.moon {
+    display: none;
 }

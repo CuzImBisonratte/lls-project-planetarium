@@ -72,6 +72,13 @@ const CONFIG = {
             sidereal_year: 164 * 365 * 86400 + 288 * 86400,
             sidereal_day: 15 * 86400 + 57 * 3600 + 59
         },
+    },
+    moon: {
+        radius: 1737.4,
+        distance: 2.5,
+        angle: 0,
+        real_distance: 0.002639,
+        sidereal_month: 2360592
     }
 };
 
@@ -90,12 +97,14 @@ var system_center = {
 var settings = {
     "realisticDistance": false,
     "planet_size_factor": 5,
-    "draw_orbits": false
+    "draw_orbits": false,
+    "earthMoon": false
 };
 var zoom_factor = 1;
 var move_x = 0;
 var move_y = 0;
 var planets = [];
+var moon;
 var system_diameter;
 var time = 0; // Time is unix timestamp
 var time_per_second = 86400;
@@ -105,6 +114,9 @@ function init(noreset = false) {
 
     // Copy config planets to planets array
     planets = JSON.parse(JSON.stringify(CONFIG.planets));
+
+    // Copy moon
+    moon = JSON.parse(JSON.stringify(CONFIG.moon));
 
     // Query window size
     var window_width = window.innerWidth;
@@ -142,6 +154,7 @@ function init(noreset = false) {
     for (var p in planets) {
         planets[p].distance_px = (settings.realisticDistance ? planets[p].real_distance : planets[p].distance) / max_distance * (system_diameter / 2 - sun_px / 2) + (sun_px / 2);
     }
+    moon.distance_px = (settings.realisticDistance ? moon.real_distance : moon.distance) / max_distance * (system_diameter / 2 - sun_px / 2);
 
     positionPlanets();
 
@@ -165,7 +178,17 @@ function positionPlanets() {
         y += move_y;
         document.getElementById("sun").style.transform = 'translate(' + move_x + 'px, ' + move_y + 'px) scale(' + zoom_factor + ')';
         // Set planet position
-        planet_element.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    }
+    // Moon
+    if (settings.earthMoon) {
+        // Set moonsize
+        document.getElementById("moon").style.width = planets["earth"].radius / CONFIG.planets["earth"].radius * CONFIG.moon.radius * zoom_factor + "px";
+        // Set moon position
+        var x = Math.cos(moon.angle * (Math.PI / 180)) * moon.distance_px;
+        var y = Math.sin(moon.angle * (Math.PI / 180)) * moon.distance_px;
+        document.getElementById("moon").style.transform = 'translate(' + x + "px, " + y + "px)";
+        // Set moon-container position
+        document.getElementsByClassName("moon")[0].style.transform = 'translate(' + planets["earth"].x + 'px, ' + planets["earth"].y + 'px)';
     }
 }
 
@@ -181,6 +204,13 @@ function timeToPositions() {
         angle += CONFIG.planets[planet].angle;
         // Set angle
         planets[planet].angle = angle;
+    }
+    // Moon
+    if (settings.earthMoon) {
+        moon.angle = (time % moon.sidereal_month);
+        moon.angle /= moon.sidereal_month;
+        moon.angle *= 360
+        moon.angle += CONFIG.moon.angle;
     }
     positionPlanets();
 }
@@ -302,4 +332,12 @@ function orbits() {
         orbit_wrapper.appendChild(orbit);
         document.getElementById("orbits").appendChild(orbit_wrapper);
     }
+}
+
+toggleEarthMoon = () => {
+    settings.earthMoon = !settings.earthMoon;
+    document.getElementById("settingEarthMoon").classList = settings.earthMoon ? "setting-on" : "setting-off";
+    document.getElementsByClassName("moon")[0].style.display = settings.earthMoon ? "grid" : "none";
+    positionPlanets();
+    orbits();
 }
