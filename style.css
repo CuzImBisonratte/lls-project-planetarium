@@ -18,7 +18,7 @@ main {
     place-content: center;
 }
 
-#overlay-time {
+#time-view {
     position: fixed;
     top: 0;
     left: 0;
@@ -31,7 +31,7 @@ main {
     border-width: 0 2px 2px 0;
 }
 
-#overlay-time h1 {
+#time-view h1 {
     margin: 0;
 }
 

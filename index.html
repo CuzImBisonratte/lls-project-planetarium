@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="style.css" />
         <link rel="stylesheet" href="planets.css" />
         <link rel="stylesheet" href="settings.css" />
+        <link rel="stylesheet" href="overlayTime.css" />
     </head>
     <body>
         <main>
@@ -41,7 +42,9 @@
                 <img src="planets/moon.jpg" id="moon" alt="" srcset="" />
             </div>
         </main>
-        <div id="overlay-time"><h1 id="date">01.01.1970</h1></div>
+        <div id="time-view" onclick="toggleTimeOverlay()">
+            <h1 id="date">01.01.1970</h1>
+        </div>
         <div id="overlay-controls">
             <button id="startPause" onclick="pausePlay()">
                 <!-- SVG by Heroicons.com -->
@@ -176,6 +179,13 @@
                 >
                     Zeige Erdenmond
                 </button>
+            </div>
+        </div>
+        <div id="overlay-time">
+            <div>
+                <div id="overlay-time-day" class="day"></div>
+                <div id="overlay-time-month" class="month"></div>
+                <div id="overlay-time-year" class="year"></div>
             </div>
         </div>
         <script src="script.js"></script>

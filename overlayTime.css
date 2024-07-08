@@ -1,0 +1,47 @@
+#overlay-time {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #00000088;
+    color: #fff;
+    text-align: center;
+    display: none;
+    place-content: center;
+}
+
+#overlay-time>div {
+    background-color: #ffffff88;
+    padding: 10px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
+    grid-template-areas:
+        ". . ."
+        "day month year"
+        ". . .";
+    font-size: 2rem;
+}
+
+.day {
+    grid-area: day;
+}
+
+.month {
+    grid-area: month;
+}
+
+.year {
+    grid-area: year;
+}
+
+.day,
+.month,
+.year {
+    padding: 0.5rem;
+    background-color: #00000088;
+    border-radius: 0.5rem;
+}

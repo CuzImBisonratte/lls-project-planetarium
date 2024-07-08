@@ -344,10 +344,37 @@ toggleEarthMoon = () => {
     orbits();
 }
 
+// 
+// Time overlay
+//
+var timeOverlayOpen = false;
+var preOpenPlay = false;
+toggleTimeOverlay = () => {
+    if (!timeOverlayOpen) preOpenPlay = !!loopInterval;
+    timeOverlayOpen = !timeOverlayOpen;
+    if (preOpenPlay) {
+        pausePlay();
+    }
+    document.getElementById("overlay-time").style.display = timeOverlayOpen ? "grid" : "none";
+    // If open, set time
+    if (timeOverlayOpen) {
+        const date = new Date(time * 1000);
+        d = date.getDate();
+        m = date.getMonth() + 1;
+        y = date.getFullYear();
+        document.getElementById("overlay-time-day").innerText = d.toString().length < 2 ? "0" + d : d;
+        document.getElementById("overlay-time-month").innerText = m.toString().length < 2 ? "0" + m : m;
+        document.getElementById("overlay-time-year").innerText = y;
+    }
+}
+
+// 
 // Shortcut keys
+// 
 window.addEventListener('keydown', (e) => {
     // Play/Pause
-    if (e.key === " ") pausePlay();
+    if (e.key === " ")
+        if (!timeOverlayOpen) pausePlay();
     // Time factors
     if (e.key === "1") setTimeFactor(1, document.getElementById("timeFactorButton1"));
     if (e.key === "2") setTimeFactor(10, document.getElementById("timeFactorButton2"));
@@ -364,4 +391,11 @@ window.addEventListener('keydown', (e) => {
     if (e.key === "r") toggleRealisticDistance();
     if (e.key === "o") togglePlanetOrbits();
     if (e.key === "m") toggleEarthMoon();
+    // t for time overlay
+    if (e.key === "t") toggleTimeOverlay();
+    // General ESC-key
+    if (e.key === "Escape") {
+        if (timeOverlayOpen) toggleTimeOverlay();
+        if (document.getElementById("overlay-settings").style.display === "grid") closeSettings();
+    }
 });
