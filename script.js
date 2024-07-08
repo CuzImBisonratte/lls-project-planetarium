@@ -178,6 +178,7 @@ function positionPlanets() {
         planets[planet].y += move_y;
         document.getElementById("sun").style.transform = 'translate(' + move_x + 'px, ' + move_y + 'px) scale(' + zoom_factor + ')';
         // Set planet position
+        planet_element.style.transform = 'translate(' + planets[planet].x + 'px, ' + planets[planet].y + 'px)';
     }
     // Moon
     if (settings.earthMoon) {
