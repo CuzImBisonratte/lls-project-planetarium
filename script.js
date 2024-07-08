@@ -245,6 +245,7 @@ function setTimeFactor(factor, e) {
     e.classList.add("timeFactorActive");
 }
 
+// Re-Init on resize
 window.addEventListener('resize', () => init(true));
 
 // Zoom (scroll)
@@ -342,3 +343,25 @@ toggleEarthMoon = () => {
     positionPlanets();
     orbits();
 }
+
+// Shortcut keys
+window.addEventListener('keydown', (e) => {
+    // Play/Pause
+    if (e.key === " ") pausePlay();
+    // Time factors
+    if (e.key === "1") setTimeFactor(1, document.getElementById("timeFactorButton1"));
+    if (e.key === "2") setTimeFactor(10, document.getElementById("timeFactorButton2"));
+    if (e.key === "3") setTimeFactor(100, document.getElementById("timeFactorButton3"));
+    if (e.key === "4") setTimeFactor(365, document.getElementById("timeFactorButton4"));
+    // Planet sizes
+    if (e.key === "7") setPlanetSize(1, document.getElementsByClassName("planetSizeButton")[0]);
+    if (e.key === "8") setPlanetSize(5, document.getElementsByClassName("planetSizeButton")[1]);
+    if (settings.realisticDistance) {
+        if (e.key === "9") setPlanetSize(50, document.getElementsByClassName("planetSizeButton")[2]);
+        if (e.key === "0") setPlanetSize(500, document.getElementsByClassName("planetSizeButton")[3]);
+    }
+    // General settings
+    if (e.key === "r") toggleRealisticDistance();
+    if (e.key === "o") togglePlanetOrbits();
+    if (e.key === "m") toggleEarthMoon();
+});

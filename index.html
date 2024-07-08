@@ -60,12 +60,22 @@
                     />
                 </svg>
             </button>
-            <button onclick="setTimeFactor(1, this)" class="timeFactorActive">
+            <button
+                id="timeFactorButton1"
+                onclick="setTimeFactor(1, this)"
+                class="timeFactorActive"
+            >
                 1x
             </button>
-            <button onclick="setTimeFactor(10, this)">10x</button>
-            <button onclick="setTimeFactor(100, this)">100x</button>
-            <button onclick="setTimeFactor(365, this)">365x</button>
+            <button id="timeFactorButton2" onclick="setTimeFactor(10, this)">
+                10x
+            </button>
+            <button id="timeFactorButton3" onclick="setTimeFactor(100, this)">
+                100x
+            </button>
+            <button id="timeFactorButton4" onclick="setTimeFactor(365, this)">
+                365x
+            </button>
         </div>
         <div id="overlay-settings-buttons">
             <button onclick="openSettings()">
